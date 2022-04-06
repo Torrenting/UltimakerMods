@@ -176,7 +176,9 @@ class MainLightingController(abstractController.AbstractController):
         if property_key == "job_state":
             self.__job_state = value
             self.__update()
-
+            
+# --- BEGIN CHANGES ---            
+            
     ## Update the leds according to the state of the printer.
     def __update(self):
         if self.getModeFlag(self.__MODE_FLAG_PARTY):
@@ -204,6 +206,8 @@ class MainLightingController(abstractController.AbstractController):
         
     def __stateIsMaintenance(self):
         return self.__printer_state == "maintenance"
+    
+# --- END CHANGES ---
 
     def __stateIsWaitingForCleanup(self):
         return self.__printer_state == "printing" and (self.__job_state == "wait_cleanup" or self.__job_state == "none")
