@@ -2,6 +2,7 @@ from typing import Dict
 
 from griffin.printer.properties.nonVolatileProperty import NonVolatileProperty
 from griffin.printer.properties.propertyContainer import PropertyContainer
+from griffin.math.immutableHsvColor import ImmutableHsvColor
 from ..hardware import abstractHardware
 from . import abstractController
 from ..effects import staticEffect
@@ -188,15 +189,15 @@ class MainLightingController(abstractController.AbstractController):
         elif self.getRuntimeFlag(self.RUNTIME_FLAG_AUTHENTICATING) or self.getRuntimeFlag(self.RUNTIME_FLAG_MESSAGE):
             self._queueEffect(glowEffect.GlowEffect(self.__getColor(), self.__getDarkColor(), self.__DEFAULT_GLOW_FREQUENCY))
         elif self.__stateIsWaitingForCleanup():
-            self._queueEffect(staticEffect.StaticEffect(colorTheme.PURPLE))
+            self._queueEffect(staticEffect.StaticEffect(ImmutableHsvColor(200, 100, 100)))
         elif self.__stateIsPrinting():
-            self._queueEffect(staticEffect.StaticEffect(colorTheme.CYAN))
+            self._queueEffect(staticEffect.StaticEffect(ImmutableHsvColor(270, 100, 100)))
         elif self.__stateIsMaintenance():
-            self._queueEffect(staticEffect.StaticEffect(colorTheme.YELLOW))
+            self._queueEffect(staticEffect.StaticEffect(ImmutableHsvColor(100, 100, 100)))
         elif self.__stateIsError():
-            self._queueEffect(staticEffect.StaticEffect(colorTheme.RED))
+            self._queueEffect(staticEffect.StaticEffect(ImmutableHsvColor(120, 100, 100)))
         else:
-            self._queueEffect(staticEffect.StaticEffect(colorTheme.GREEN))
+            self._queueEffect(staticEffect.StaticEffect(ImmutableHsvColor(0, 100, 100)))
 
     def __stateIsPrinting(self):
         return self.__printer_state == "printing"
