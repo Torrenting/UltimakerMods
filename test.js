@@ -14,10 +14,10 @@ router.get('/printers/syncWeight',  function (req, res, next) {
       status = res.status;
       return res.json()
     }).then((jsonResponse) => {
-          let listItems = jsonResponse.data.boards[0].items;
+          let listItems = jsonResponse["data"]["boards"][0]["items"];
           for(let i = 0; i < listItems.length; i++) {
-            if(listItems[i].column_values[1].text.toLowerCase() === "Paid/Printing" && listItems[i].column_values[4].text.toLowerCase() === req.query.printer.toString().toLowerCase()) {
-              let weight = parseFloat(listItems[i].column_values[9].text);
+            if(listItems[i]["column_values"][1]["text"].toLowerCase() === "Paid/Printing" && listItems[i]["column_values"][4]["text"].toLowerCase() === req.query.printer.toString().toLowerCase()) {
+              let weight = parseFloat(listItems[i]["column_values"][8]["text"]);
               let instantWeight = weight * parseFloat(req.query.prog);
               subtractFromMonday(req.query.printer.toString(), instantWeight).then(result => {
                 res.status(200).json({
